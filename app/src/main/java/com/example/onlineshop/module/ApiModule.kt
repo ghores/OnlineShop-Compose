@@ -1,5 +1,6 @@
 package com.example.onlineshop.module
 
+import com.example.onlineshop.api.site.SliderApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +29,11 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSliderApi(retrofit: Retrofit): SliderApi {
+        return retrofit.create(SliderApi::class.java)
     }
 }
