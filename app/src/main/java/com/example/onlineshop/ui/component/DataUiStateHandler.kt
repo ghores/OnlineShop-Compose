@@ -10,11 +10,11 @@ fun <T> DataUiStateHandler(
     modifier: Modifier = Modifier,
     loadingContent: @Composable () -> Unit = { Loading(modifier) },
     errorContent: @Composable (String) -> Unit = { ErrorBox(it, modifier = modifier) },
-    successContent: @Composable () -> Unit
+    successContent: @Composable (List<T>) -> Unit
 ) {
     when {
         state.isLoading -> loadingContent()
         state.error != null -> errorContent(state.error)
-        state.data != null -> successContent()
+        state.data != null -> successContent(state.data)
     }
 }
