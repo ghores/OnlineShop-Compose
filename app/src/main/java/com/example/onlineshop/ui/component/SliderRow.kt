@@ -27,34 +27,23 @@ import com.example.onlineshop.viewmodel.HomeViewModel
 
 @Composable
 fun SliderRow(homeViewModel: HomeViewModel) {
-    when {
-        homeViewModel.sliders.isLoading -> {
-            Loading(
-                Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            )
-        }
-
-        homeViewModel.sliders.error != null -> {
-            ErrorBox(
-                homeViewModel.sliders.error ?: "Error",
-                Modifier.height(200.dp)
-            )
-        }
-
-        homeViewModel.sliders.data != null -> {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                itemsIndexed(homeViewModel.sliders.data as List<Slider>) { index, slider ->
-                    AnimatedSlideIn(index * 100) {
-                        SliderItem(slider = slider)
-                    }
+    DataUiStateHandler(
+        state = homeViewModel.sliders,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            itemsIndexed(homeViewModel.sliders.data as List<Slider>) { index, slider ->
+                AnimatedSlideIn(index * 100) {
+                    SliderItem(slider = slider)
                 }
             }
         }
     }
+
 }
 
 @Composable
