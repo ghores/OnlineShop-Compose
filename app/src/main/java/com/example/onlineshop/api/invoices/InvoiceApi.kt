@@ -1,5 +1,7 @@
 package com.example.onlineshop.api.invoices
 
+import com.example.onlineshop.model.ApiResponse
+import com.example.onlineshop.model.invoices.Invoice
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -10,7 +12,7 @@ interface InvoiceApi {
     suspend fun getInvoiceById(
         @Path("id") id: Long,
         @Header("Authorization") token: String
-    )
+    ): ApiResponse<Invoice>
 
     @GET("invoice/user/{userId}")
     suspend fun getInvoicesByUserId(
@@ -18,5 +20,5 @@ interface InvoiceApi {
         @Query("pageIndex") pageIndex: Int,
         @Query("pageSize") pageSize: Int,
         @Header("Authorization") token: String
-    )
+    ): ApiResponse<Invoice>
 }
