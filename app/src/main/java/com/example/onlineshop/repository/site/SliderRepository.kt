@@ -9,8 +9,8 @@ import javax.inject.Inject
 class SliderRepository @Inject constructor(
     private val api: SliderApi
 ) : BaseRepository() {
-    suspend fun getSlider(): ApiResponse<Slider> =
+    suspend fun getSliders(): ApiResponse<Slider> =
         safeApiCall {
-            api.getSlider()
+            api.getSliders()
         }
 }

@@ -28,7 +28,7 @@ fun HomeScreen(
     ) {
         SliderRow(homeViewModel)
         Spacer(Modifier.height(10.dp))
-        ProductCategoriesRow()
+        ProductCategoriesRow(homeViewModel)
         Spacer(Modifier.height(10.dp))
         ProductsView()
     }

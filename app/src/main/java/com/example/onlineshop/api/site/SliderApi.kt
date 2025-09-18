@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface SliderApi {
     @GET("slider")
-    suspend fun getSlider(): ApiResponse<Slider>
+    suspend fun getSliders(): ApiResponse<Slider>
 }
