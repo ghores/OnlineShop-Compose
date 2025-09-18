@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -47,7 +48,7 @@ fun ProductFilterRow(homeViewModel: HomeViewModel) {
                     selectedIndex = index
                     when (selectedIndex) {
                         0 -> homeViewModel.loadAllProducts()
-                        1 -> homeViewModel.loadPopularProducts()
+                        1 -> homeViewModel.loadNewProducts()
                         2 -> homeViewModel.loadPopularProducts()
                     }
                 },
@@ -71,5 +72,26 @@ fun ProductFilterRow(homeViewModel: HomeViewModel) {
 
 @Composable
 fun ProductListView(homeViewModel: HomeViewModel) {
-
+    DataUiStateHandler(
+        state = homeViewModel.products,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) { products ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            for ((index, item) in products.withIndex()) {
+                AnimatedSlideIn(index * 100) {
+                    AppCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        image = item.image,
+                        title = item.title,
+                    )
+                }
+            }
+        }
+    }
 }
