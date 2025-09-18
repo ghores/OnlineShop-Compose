@@ -28,6 +28,9 @@ class HomeViewModel @Inject constructor(
     init {
         loadSliders()
         loadProductCategories()
+        loadAllProducts()
+        loadNewProducts()
+        loadPopularProducts()
     }
 
     private fun loadSliders() {
@@ -40,5 +43,17 @@ class HomeViewModel @Inject constructor(
         loadData({ productCategories = it }) {
             productCategoryRepository.getCategories()
         }
+    }
+
+    fun loadAllProducts() {
+
+    }
+
+    fun loadNewProducts() {
+
+    }
+
+    fun loadPopularProducts() {
+
     }
 }

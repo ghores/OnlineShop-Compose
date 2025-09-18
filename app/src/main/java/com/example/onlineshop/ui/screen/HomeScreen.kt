@@ -30,6 +30,6 @@ fun HomeScreen(
         Spacer(Modifier.height(10.dp))
         ProductCategoriesRow(homeViewModel)
         Spacer(Modifier.height(10.dp))
-        ProductsView()
+        ProductsView(homeViewModel)
     }
 }
