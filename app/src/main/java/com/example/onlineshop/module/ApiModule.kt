@@ -6,6 +6,7 @@ import com.example.onlineshop.api.invoices.TransactionApi
 import com.example.onlineshop.api.products.ProductApi
 import com.example.onlineshop.api.products.ProductCategoryApi
 import com.example.onlineshop.api.site.SliderApi
+import com.example.onlineshop.config.UnsafeSSLConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,7 @@ class ApiModule {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-        val client = OkHttpClient.Builder()
+        val client = UnsafeSSLConfig.unsafeOkHttpClient
             .addInterceptor(logging)
             .build()
 
