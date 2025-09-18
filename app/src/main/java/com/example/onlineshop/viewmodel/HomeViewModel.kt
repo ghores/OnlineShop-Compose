@@ -27,6 +27,7 @@ class HomeViewModel @Inject constructor(
     init {
         loadSliders()
     }
+
     fun loadSliders() {
         sliders = DataUiState(isLoading = true)
         viewModelScope.launch {
@@ -35,6 +36,7 @@ class HomeViewModel @Inject constructor(
                 if (response.status != "OK") {
                     throw Exception(response.message)
                 }
+                sliders = DataUiState(data = response.data)
             } catch (e: Exception) {
                 sliders = DataUiState(error = e.message)
             }

@@ -26,7 +26,7 @@ fun HomeScreen(
             .padding(10.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        SliderRow()
+        SliderRow(homeViewModel)
         Spacer(Modifier.height(10.dp))
         ProductCategoriesRow()
         Spacer(Modifier.height(10.dp))
