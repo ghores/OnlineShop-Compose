@@ -18,7 +18,7 @@ fun OnlineShopApp() {
     val navController = rememberNavController()
     val isFullScreen = checkForFullScreen(navController)
     Scaffold(
-        topBar = { if (!isFullScreen) TopNavBar() },
+        topBar = { if (!isFullScreen) TopNavBar(navController = navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Box(
