@@ -22,7 +22,7 @@ fun AnimatedSlideIn(delay: Int = 0, content: @Composable () -> Unit) {
                 easing = FastOutSlowInEasing,
                 delayMillis = delay
             )
-        ),
+        )
     ) {
         content()
     }

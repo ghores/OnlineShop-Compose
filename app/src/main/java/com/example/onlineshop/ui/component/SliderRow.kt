@@ -30,7 +30,6 @@ fun SliderRow(homeViewModel: HomeViewModel) {
             }
         }
     }
-
 }
 
 @Composable

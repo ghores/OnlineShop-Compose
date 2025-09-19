@@ -9,11 +9,15 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.model.products.ProductCategory
 import com.example.onlineshop.viewmodel.HomeViewModel
 
 @Composable
-fun ProductCategoriesRow(homeViewModel: HomeViewModel) {
+fun ProductCategoriesRow(
+    homeViewModel: HomeViewModel,
+    navController: NavHostController
+) {
     DataUiStateHandler(
         state = homeViewModel.productCategories,
         modifier = Modifier
@@ -25,7 +29,7 @@ fun ProductCategoriesRow(homeViewModel: HomeViewModel) {
         ) {
             itemsIndexed(categories) { index, item ->
                 AnimatedSlideIn(index * 100) {
-                    ProductCategoriesItem(item)
+                    ProductCategoriesItem(productCategory = item, navController = navController)
                 }
             }
         }
@@ -33,12 +37,14 @@ fun ProductCategoriesRow(homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun ProductCategoriesItem(productCategory: ProductCategory) {
+fun ProductCategoriesItem(productCategory: ProductCategory, navController: NavHostController) {
     AppCard(
         modifier = Modifier
             .width(160.dp)
             .height(200.dp),
         image = productCategory.image,
         title = productCategory.title,
-    )
+    ) {
+        navController.navigate("products/${productCategory.id}/${productCategory.title}")
+    }
 }

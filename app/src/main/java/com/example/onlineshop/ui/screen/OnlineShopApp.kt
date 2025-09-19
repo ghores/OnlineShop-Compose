@@ -7,10 +7,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.onlineshop.ui.component.TopNavBar
 
 @Composable
@@ -27,8 +29,19 @@ fun OnlineShopApp() {
                 .padding(innerPadding)
         ) {
             NavHost(navController, startDestination = "home") {
-                composable("home") {
+                composable(route = "home") {
                     HomeScreen(navController)
+                }
+                composable(
+                    route = "products/{catId}/{title}",
+                    arguments = listOf(
+                        navArgument("catId") { type = NavType.LongType },
+                        navArgument("title") { type = NavType.StringType }
+                    )
+                ) {
+                    val catId = it.arguments?.getLong("catId") ?: 0
+                    val title = it.arguments?.getString("title") ?: ""
+                    ProductsScreen(navController, catId, title)
                 }
             }
         }
