@@ -1,11 +1,13 @@
 package com.example.onlineshop.ui.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,7 +28,7 @@ fun OnlineShopApp() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(if (!isFullScreen) innerPadding else PaddingValues(0.dp))
         ) {
             NavHost(navController, startDestination = "home") {
                 composable(route = "home") {
@@ -43,6 +45,15 @@ fun OnlineShopApp() {
                     val title = it.arguments?.getString("title") ?: ""
                     ProductsScreen(navController, catId, title)
                 }
+                composable(
+                    route = "showProduct/{id}",
+                    arguments = listOf(
+                        navArgument("id") { type = NavType.LongType }
+                    )
+                ) {
+                    val id = it.arguments?.getLong("id") ?: 0
+                    SingleProductScreen(navController, id, innerPadding)
+                }
             }
         }
     }
@@ -50,7 +61,7 @@ fun OnlineShopApp() {
 
 @Composable
 fun checkForFullScreen(navController: NavHostController): Boolean {
-    val fullScreenRoutes = listOf("login")
+    val fullScreenRoutes = listOf("login", "showProduct")
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route ?: ""
     return fullScreenRoutes.any {
         currentRoute.startsWith(it)

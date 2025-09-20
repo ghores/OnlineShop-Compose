@@ -24,14 +24,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.viewmodel.HomeViewModel
 
 @Composable
-fun ProductsView(homeViewModel: HomeViewModel) {
+fun ProductsView(
+    homeViewModel: HomeViewModel,
+    navController: NavHostController
+) {
     Column {
         ProductFilterRow(homeViewModel)
         Spacer(Modifier.height(10.dp))
-        ProductListView(homeViewModel)
+        ProductListView(homeViewModel, navController)
     }
 }
 
@@ -71,7 +75,10 @@ fun ProductFilterRow(homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun ProductListView(homeViewModel: HomeViewModel) {
+fun ProductListView(
+    homeViewModel: HomeViewModel,
+    navController: NavHostController
+) {
     DataUiStateHandler(
         state = homeViewModel.products,
         modifier = Modifier
@@ -89,6 +96,9 @@ fun ProductListView(homeViewModel: HomeViewModel) {
                             .height(200.dp),
                         image = item.image,
                         title = item.title,
+                        onClick = {
+                            navController.navigate("showProduct/${item.id}")
+                        }
                     )
                 }
             }
