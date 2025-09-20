@@ -1,19 +1,38 @@
 package com.example.onlineshop.ui.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.onlineshop.ui.component.AnimatedSlideIn
 import com.example.onlineshop.ui.component.AppGradient
 import com.example.onlineshop.ui.component.AppImage
+import com.example.onlineshop.ui.utils.formatPrice
 import com.example.onlineshop.viewmodel.SingleProductViewModel
 
 @Composable
@@ -31,13 +50,96 @@ fun SingleProductScreen(
             model = singleProductViewModel.product?.image ?: "",
             description = singleProductViewModel.product?.title ?: ""
         )
-        AppGradient(modifier = Modifier
-            .height(600.dp)
-            .align(Alignment.BottomCenter))
+        AppGradient(
+            modifier = Modifier
+                .height(600.dp)
+                .align(Alignment.BottomCenter)
+        )
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+        ) {
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.align(Alignment.TopStart)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = ""
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(20.dp)
+            ) {
+                AnimatedSlideIn {
+                    Text(
+                        text = singleProductViewModel.product?.title ?: "",
+                        color = Color.White,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(Modifier.height(10.dp))
+                }
+                AnimatedSlideIn(delay = 200) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = formatPrice(singleProductViewModel.product?.price ?: 0),
+                            color = Color.White,
+                            fontSize = 26.sp
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = "Toman",
+                            color = Color.LightGray,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+                Spacer(Modifier.height(10.dp))
+                ProductSizesRow(singleProductViewModel)
+                Spacer(Modifier.height(10.dp))
+                ProductColorsRow(singleProductViewModel)
+                Spacer(Modifier.height(20.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun ProductSizesRow(singleProductViewModel: SingleProductViewModel) {
+    AnimatedSlideIn(delay = 400) {
+        Text(
+            text = "Size",
+            color = Color.White,
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold
         )
     }
+    Spacer(Modifier.height(10.dp))
+    LazyRow {
+        itemsIndexed(singleProductViewModel.product?.sizes ?: listOf()) { index, item ->
+            AnimatedSlideIn(delay = 600 + (index * 200)) {
+                TextButton(
+                    onClick = {
+                        singleProductViewModel.selectedSize = item
+                    },
+                    shape = RoundedCornerShape(15.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (singleProductViewModel.selectedSize == item) Color.White else Color.Transparent,
+                        contentColor = if (singleProductViewModel.selectedSize == item) Color.Black else Color.White
+                    )
+                ) {
+                    Text(item.title ?: "", fontWeight = FontWeight.Bold)
+                }
+            }
+            Spacer(Modifier.width(5.dp))
+        }
+    }
+}
+
+@Composable
+fun ProductColorsRow(singleProductViewModel: SingleProductViewModel) {
 }
