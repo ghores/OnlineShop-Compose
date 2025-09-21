@@ -67,7 +67,9 @@ fun ProductsScreen(
                             .height(200.dp),
                         image = item.image,
                         title = item.title,
-                    )
+                    ) {
+                        navController.navigate("showProduct/${item.id}")
+                    }
                 }
             }
         }

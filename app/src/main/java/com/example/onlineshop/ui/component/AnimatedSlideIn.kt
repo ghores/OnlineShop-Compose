@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 
 @Composable
-fun AnimatedSlideIn(delay: Int = 0, content: @Composable () -> Unit) {
+fun AnimatedSlideIn(delay: Int = 0, durationMillis: Int = 1000, content: @Composable () -> Unit) {
     val isVisible = remember { MutableTransitionState(false) }.apply {
         targetState = true
     }
@@ -18,7 +18,7 @@ fun AnimatedSlideIn(delay: Int = 0, content: @Composable () -> Unit) {
         enter = slideInVertically(
             initialOffsetY = { -700 },
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = durationMillis,
                 easing = FastOutSlowInEasing,
                 delayMillis = delay
             )

@@ -1,19 +1,26 @@
 package com.example.onlineshop.ui.screen
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.onlineshop.ui.component.AnimatedSlideIn
@@ -52,7 +60,7 @@ fun SingleProductScreen(
         )
         AppGradient(
             modifier = Modifier
-                .height(600.dp)
+                .height(800.dp)
                 .align(Alignment.BottomCenter)
         )
         Box(
@@ -98,10 +106,34 @@ fun SingleProductScreen(
                         )
                     }
                 }
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(25.dp))
                 ProductSizesRow(singleProductViewModel)
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(25.dp))
                 ProductColorsRow(singleProductViewModel)
+                Spacer(Modifier.height(25.dp))
+                AnimatedSlideIn(1800, durationMillis = 3000) {
+                    Text(
+                        singleProductViewModel.product?.description ?: "",
+                        color = Color.LightGray,
+                        fontSize = 16.sp
+                    )
+                }
+                Spacer(Modifier.height(30.dp))
+                AnimatedSlideIn(3000) {
+                    Button(
+                        onClick = {},
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Text(
+                            "Buy Now",
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
                 Spacer(Modifier.height(20.dp))
             }
         }
@@ -142,4 +174,41 @@ fun ProductSizesRow(singleProductViewModel: SingleProductViewModel) {
 
 @Composable
 fun ProductColorsRow(singleProductViewModel: SingleProductViewModel) {
+    AnimatedSlideIn(delay = 1000) {
+        Text(
+            text = "Color",
+            color = Color.White,
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+    Spacer(Modifier.height(10.dp))
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        itemsIndexed(singleProductViewModel.product?.colors ?: listOf()) { index, item ->
+            AnimatedSlideIn(delay = 1200 + (index * 200)) {
+                TextButton(
+                    onClick = {
+                        singleProductViewModel.selectedColor = item
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color("#${item.hexValue}".toColorInt())
+                    ),
+                    modifier = Modifier.size(40.dp),
+                    border = BorderStroke(
+                        2.dp,
+                        if (singleProductViewModel.selectedColor == item) Color.Red else Color.White
+                    )
+                ) {
+                    if (singleProductViewModel.selectedColor == item) {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
