@@ -1,5 +1,6 @@
 package com.example.onlineshop.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +43,7 @@ import com.example.onlineshop.ui.component.AnimatedSlideIn
 import com.example.onlineshop.ui.component.AppGradient
 import com.example.onlineshop.ui.component.AppImage
 import com.example.onlineshop.ui.utils.formatPrice
+import com.example.onlineshop.viewmodel.BasketViewModel
 import com.example.onlineshop.viewmodel.SingleProductViewModel
 
 @Composable
@@ -48,8 +51,12 @@ fun SingleProductScreen(
     navController: NavHostController,
     id: Long,
     innerPadding: PaddingValues,
-    singleProductViewModel: SingleProductViewModel = hiltViewModel()
+    singleProductViewModel: SingleProductViewModel = hiltViewModel(),
+    basketViewModel: BasketViewModel = hiltViewModel()
 ) {
+
+    val context = LocalContext.current
+
     LaunchedEffect(id) {
         singleProductViewModel.loadProduct(id = id)
     }
@@ -121,7 +128,16 @@ fun SingleProductScreen(
                 Spacer(Modifier.height(30.dp))
                 AnimatedSlideIn(3000) {
                     Button(
-                        onClick = {},
+                        onClick = {
+                            basketViewModel.addToBasket(
+                                singleProductViewModel.product,
+                                singleProductViewModel.selectedColor,
+                                singleProductViewModel.selectedSize
+                            )
+                            Toast.makeText(context, "Product added to basket", Toast.LENGTH_SHORT).show()
+                            navController.popBackStack()
+
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White,
