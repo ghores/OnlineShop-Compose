@@ -26,6 +26,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,6 +39,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.onlineshop.model.db.BasketEntity
+import com.example.onlineshop.ui.component.AppDialog
 import com.example.onlineshop.ui.component.AppImage
 import com.example.onlineshop.ui.component.PriceText
 import com.example.onlineshop.viewmodel.BasketViewModel
@@ -46,6 +50,9 @@ fun BasketScreen(
     basketViewModel: BasketViewModel = hiltViewModel()
 ) {
     val basketItem by basketViewModel.basketItems.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+    var itemToDelete by remember { mutableStateOf<BasketEntity?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,13 +73,25 @@ fun BasketScreen(
                         basketEntity = item,
                         onIncrease = { basketViewModel.increaseQuantity(item) },
                         onDecrease = { basketViewModel.decreaseQuantity(item) },
-                        onDelete = { basketViewModel.deleteItem(item) }
+                        onDelete = {
+                            showDialog = true
+                            itemToDelete = item
+                        }
                     )
                     HorizontalDivider()
                 }
             }
         }
     }
+    AppDialog(
+        showDialog = showDialog,
+        onDismiss = { showDialog = false },
+        onConfirm = {
+            itemToDelete?.let { basketViewModel.deleteItem(it) }
+            showDialog = false
+        },
+        onCancel = { showDialog = false }
+    )
 }
 
 @Composable
