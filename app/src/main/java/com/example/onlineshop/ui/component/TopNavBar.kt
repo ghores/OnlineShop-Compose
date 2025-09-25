@@ -12,13 +12,22 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.onlineshop.R
+import com.example.onlineshop.viewmodel.BasketViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavBar(navController: NavHostController) {
+fun TopNavBar(
+    navController: NavHostController,
+    basketViewModel: BasketViewModel = hiltViewModel()
+) {
+    val basketItems by basketViewModel.basketItems.collectAsState()
+
     TopAppBar(
         title = {
             AnimatedSlideIn(300) {
@@ -29,11 +38,15 @@ fun TopNavBar(navController: NavHostController) {
             }
         }, actions = {
             AnimatedSlideIn(600) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    navController.navigate("basket")
+                }) {
                     BadgedBox(
                         badge = {
-                            Badge {
-                                Text("2")
+                            if (basketItems.isNotEmpty()) {
+                                Badge {
+                                    Text(basketItems.size.toString())
+                                }
                             }
                         }
                     ) {

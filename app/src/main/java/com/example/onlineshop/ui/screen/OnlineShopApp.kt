@@ -34,6 +34,9 @@ fun OnlineShopApp() {
                 composable(route = "home") {
                     HomeScreen(navController)
                 }
+                composable(route = "basket") {
+                    BasketScreen(navController)
+                }
                 composable(
                     route = "products/{catId}/{title}",
                     arguments = listOf(

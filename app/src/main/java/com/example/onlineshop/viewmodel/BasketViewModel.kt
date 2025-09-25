@@ -9,6 +9,8 @@ import com.example.onlineshop.model.products.ProductSize
 import com.example.onlineshop.repository.basket.BasketEntityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +18,11 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(
     private val basketEntityRepository: BasketEntityRepository
 ) : ViewModel() {
+    val basketItems = basketEntityRepository.getAllBasketItems().stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        emptyList()
+    )
 
     fun addToBasket(product: Product?, color: ProductColor?, size: ProductSize?) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,6 +48,24 @@ class BasketViewModel @Inject constructor(
                     )
                 )
             }
+        }
+    }
+
+    fun increaseQuantity(basketEntity: BasketEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            basketEntityRepository.incrementQuantity(basketEntity)
+        }
+    }
+
+    fun decreaseQuantity(basketEntity: BasketEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            basketEntityRepository.decrementQuantity(basketEntity)
+        }
+    }
+
+    fun deleteItem(basketEntity: BasketEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            basketEntityRepository.deleteBasketItem(basketEntity)
         }
     }
 }

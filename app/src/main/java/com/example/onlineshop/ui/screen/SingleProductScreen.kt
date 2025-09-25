@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +41,7 @@ import androidx.navigation.NavHostController
 import com.example.onlineshop.ui.component.AnimatedSlideIn
 import com.example.onlineshop.ui.component.AppGradient
 import com.example.onlineshop.ui.component.AppImage
-import com.example.onlineshop.ui.utils.formatPrice
+import com.example.onlineshop.ui.component.PriceText
 import com.example.onlineshop.viewmodel.BasketViewModel
 import com.example.onlineshop.viewmodel.SingleProductViewModel
 
@@ -99,19 +98,7 @@ fun SingleProductScreen(
                     Spacer(Modifier.height(10.dp))
                 }
                 AnimatedSlideIn(delay = 200) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = formatPrice(singleProductViewModel.product?.price ?: 0),
-                            color = Color.White,
-                            fontSize = 26.sp
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            text = "Toman",
-                            color = Color.LightGray,
-                            fontSize = 16.sp
-                        )
-                    }
+                    PriceText(price = singleProductViewModel.product?.price ?: 0)
                 }
                 Spacer(Modifier.height(25.dp))
                 ProductSizesRow(singleProductViewModel)
@@ -134,7 +121,8 @@ fun SingleProductScreen(
                                 singleProductViewModel.selectedColor,
                                 singleProductViewModel.selectedSize
                             )
-                            Toast.makeText(context, "Product added to basket", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Product added to basket", Toast.LENGTH_SHORT)
+                                .show()
                             navController.popBackStack()
 
                         },
