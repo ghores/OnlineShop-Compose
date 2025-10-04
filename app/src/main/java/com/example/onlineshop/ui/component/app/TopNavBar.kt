@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.app
 
 import androidx.compose.foundation.Image
 import androidx.compose.material.icons.Icons
@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.onlineshop.R
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
 import com.example.onlineshop.viewmodel.BasketViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

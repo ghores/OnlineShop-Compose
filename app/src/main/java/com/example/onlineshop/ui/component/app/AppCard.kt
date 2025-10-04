@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.app
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.onlineshop.ui.component.graphic.AppGradient
 
 @Composable
 fun AppCard(

@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.app
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

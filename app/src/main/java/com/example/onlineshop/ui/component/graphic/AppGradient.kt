@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.graphic
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

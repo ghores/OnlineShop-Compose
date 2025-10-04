@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.onlineshop.ui.component.AnimatedSlideIn
-import com.example.onlineshop.ui.component.AppCard
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
+import com.example.onlineshop.ui.component.app.AppCard
 import com.example.onlineshop.viewmodel.ProductsViewModel
 
 @Composable

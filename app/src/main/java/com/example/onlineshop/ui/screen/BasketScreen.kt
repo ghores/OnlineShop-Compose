@@ -41,10 +41,10 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.onlineshop.model.db.BasketEntity
-import com.example.onlineshop.ui.component.AnimatedSlideIn
-import com.example.onlineshop.ui.component.AppDialog
-import com.example.onlineshop.ui.component.AppImage
-import com.example.onlineshop.ui.component.PriceText
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
+import com.example.onlineshop.ui.component.dialog.AppDialog
+import com.example.onlineshop.ui.component.app.AppImage
+import com.example.onlineshop.ui.component.app.PriceText
 import com.example.onlineshop.ui.theme.AppGreen
 import com.example.onlineshop.viewmodel.BasketViewModel
 
@@ -128,6 +128,7 @@ fun BasketScreen(
                 AnimatedSlideIn {
                     Button(
                         onClick = {
+                            navController.navigate("userPayment")
                         },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(

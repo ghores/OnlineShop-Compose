@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.app
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.onlineshop.model.products.ProductCategory
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
+import com.example.onlineshop.ui.component.basic.DataUiStateHandler
 import com.example.onlineshop.viewmodel.HomeViewModel
 
 @Composable

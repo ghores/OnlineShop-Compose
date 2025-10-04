@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
+import com.example.onlineshop.ui.component.basic.DataUiStateHandler
 import com.example.onlineshop.viewmodel.HomeViewModel
 
 @Composable

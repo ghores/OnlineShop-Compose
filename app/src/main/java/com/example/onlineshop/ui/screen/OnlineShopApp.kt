@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.onlineshop.ui.component.TopNavBar
+import com.example.onlineshop.ui.component.app.TopNavBar
 
 @Composable
 fun OnlineShopApp() {
@@ -56,6 +56,9 @@ fun OnlineShopApp() {
                 ) {
                     val id = it.arguments?.getLong("id") ?: 0
                     SingleProductScreen(navController, id, innerPadding)
+                }
+                composable(route = "userPayment") {
+                    UserPaymentScreen(navController)
                 }
             }
         }

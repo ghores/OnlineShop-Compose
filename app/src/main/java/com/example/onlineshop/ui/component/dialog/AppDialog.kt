@@ -1,4 +1,4 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.dialog
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

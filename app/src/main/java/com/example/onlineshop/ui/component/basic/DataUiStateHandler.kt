@@ -1,7 +1,9 @@
-package com.example.onlineshop.ui.component
+package com.example.onlineshop.ui.component.basic
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.onlineshop.ui.component.app.ErrorBox
+import com.example.onlineshop.ui.component.app.Loading
 import com.example.onlineshop.ui.state.DataUiState
 
 @Composable

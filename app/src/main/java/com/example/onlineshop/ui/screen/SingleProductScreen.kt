@@ -38,10 +38,10 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.onlineshop.ui.component.AnimatedSlideIn
-import com.example.onlineshop.ui.component.AppGradient
-import com.example.onlineshop.ui.component.AppImage
-import com.example.onlineshop.ui.component.PriceText
+import com.example.onlineshop.ui.component.animation.AnimatedSlideIn
+import com.example.onlineshop.ui.component.graphic.AppGradient
+import com.example.onlineshop.ui.component.app.AppImage
+import com.example.onlineshop.ui.component.app.PriceText
 import com.example.onlineshop.viewmodel.BasketViewModel
 import com.example.onlineshop.viewmodel.SingleProductViewModel
 
