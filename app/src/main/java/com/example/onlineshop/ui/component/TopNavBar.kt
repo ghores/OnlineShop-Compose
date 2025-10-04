@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.onlineshop.R
 import com.example.onlineshop.viewmodel.BasketViewModel
 
@@ -27,6 +28,7 @@ fun TopNavBar(
     basketViewModel: BasketViewModel = hiltViewModel()
 ) {
     val basketItems by basketViewModel.basketItems.collectAsState()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     TopAppBar(
         title = {
@@ -39,7 +41,11 @@ fun TopNavBar(
         }, actions = {
             AnimatedSlideIn(600) {
                 IconButton(onClick = {
-                    navController.navigate("basket")
+                    if (currentRoute != "basket") {
+                        navController.navigate("basket") {
+                            launchSingleTop = true
+                        }
+                    }
                 }) {
                     BadgedBox(
                         badge = {

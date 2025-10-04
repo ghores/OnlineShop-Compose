@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -39,9 +41,11 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.onlineshop.model.db.BasketEntity
+import com.example.onlineshop.ui.component.AnimatedSlideIn
 import com.example.onlineshop.ui.component.AppDialog
 import com.example.onlineshop.ui.component.AppImage
 import com.example.onlineshop.ui.component.PriceText
+import com.example.onlineshop.ui.theme.AppGreen
 import com.example.onlineshop.viewmodel.BasketViewModel
 
 @Composable
@@ -52,6 +56,7 @@ fun BasketScreen(
     val basketItem by basketViewModel.basketItems.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var itemToDelete by remember { mutableStateOf<BasketEntity?>(null) }
+    val totalPrice = basketItem.sumOf { it.price?.times(it.quantity) ?: 0 }
 
     Column(
         modifier = Modifier
@@ -67,18 +72,70 @@ fun BasketScreen(
         if (basketItem.isEmpty()) {
             Text(text = "Your cart is empty")
         } else {
-            LazyColumn {
-                items(basketItem) { item ->
-                    BasketItemRow(
-                        basketEntity = item,
-                        onIncrease = { basketViewModel.increaseQuantity(item) },
-                        onDecrease = { basketViewModel.decreaseQuantity(item) },
-                        onDelete = {
-                            showDialog = true
-                            itemToDelete = item
+            LazyColumn(modifier = Modifier.weight(1f)) {
+                itemsIndexed(basketItem) { index, item ->
+                    AnimatedSlideIn(index * 200) {
+                        Column {
+                            BasketItemRow(
+                                basketEntity = item,
+                                onIncrease = { basketViewModel.increaseQuantity(item) },
+                                onDecrease = { basketViewModel.decreaseQuantity(item) },
+                                onDelete = {
+                                    showDialog = true
+                                    itemToDelete = item
+                                }
+                            )
+                            HorizontalDivider()
                         }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                AnimatedSlideIn {
+                    Text(text = "Total Price: ", fontWeight = FontWeight.Bold)
+                }
+                AnimatedSlideIn {
+                    PriceText(
+                        totalPrice,
+                        priceColor = Color.Black,
+                        priceSize = 16.sp,
+                        tomanColor = Color.Gray,
+                        tomanSize = 12.sp
                     )
-                    HorizontalDivider()
+                }
+            }
+            Spacer(modifier = Modifier.height(25.dp))
+            Row(modifier = Modifier.fillMaxWidth()) {
+                AnimatedSlideIn {
+                    Button(
+                        onClick = {
+                            navController.navigate("home")
+                        },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Text(text = "Continue shopping")
+                    }
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                AnimatedSlideIn {
+                    Button(
+                        onClick = {
+                        },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = AppGreen
+                        )
+                    ) {
+                        Text(text = "Proceed to payment")
+                    }
                 }
             }
         }
